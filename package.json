@@ -8,5 +8,17 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushpandey28/backend_code_practice.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ayushpandey28/backend_code_practice/issues"
+  },
+  "homepage": "https://github.com/ayushpandey28/backend_code_practice#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
