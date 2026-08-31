@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
@@ -13,7 +14,6 @@
     "type": "git",
     "url": "git+https://github.com/ayushpandey28/backend_code_practice.git"
   },
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/ayushpandey28/backend_code_practice/issues"
   },
