@@ -54,9 +54,7 @@
 //         })
 //     }
 //     const newStudent = {
-//         id: students.length > 0
-//             ? students[students.length - 1].id + 1
-//             : 1,
+//         id: students.length > 0 ? students[students.length - 1].id + 1 : 1,
 //         name: name,
 //         age: age,
 //         course: course
@@ -109,4 +107,18 @@
 // })
 
 
+
+
+
+
 import express from 'express'
+import studentRoutes from './routes/studentRoutes.js'
+const app = express()
+// Middleware
+app.use(express.json())
+// Student routes
+app.use('/students', studentRoutes)
+// Start server
+app.listen(3000, () => {
+    console.log('Server started')
+})
