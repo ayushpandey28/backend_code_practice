@@ -108,17 +108,21 @@
 
 
 
+const express=require('express') //const express=require('express')
+const app=express() //http.createserver equivalent to this
+app.use(express.urlencoded({ extended: true })); // we create a middleware so that data is written in json
 
+const studentRoutes=require('./routes/studentRoutes')
 
+//Global Middleware
+app.use((req,res,next)=>{
+    console.log("Request URL", req.originalUrl)
+    console.log("Requested Method", req.method)
+    next()
+})
 
-import express from 'express'
-import studentRoutes from './routes/studentRoutes.js'
-const app = express()
-// Middleware
-app.use(express.json())
-// Student routes
-app.use('/students', studentRoutes)
-// Start server
-app.listen(3000, () => {
-    console.log('Server started')
+app.use('/students',studentRoutes)
+
+app.listen(3000,()=>{
+    console.log('Server started successfully... ')
 })

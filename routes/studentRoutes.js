@@ -1,5 +1,10 @@
-import express from 'express'
-const router = express.Router()
+const express = require('express');
+const checkroles = require('../middleware/rolemiddleware.js')
+const router = express.Router();
+router.use((req,res,next)=>{
+console.log("You are at Student Route")
+next()
+})
 let students = [
     {
         id: 1,
@@ -15,13 +20,13 @@ let students = [
     }
 ]
 // GET - All students
-router.get('/', (req, res) => {
+router.get('/',checkroles('teacher',"admin","student"), (req, res) => {
     res.json(students)
 })
 
 
 // GET - Search student
-router.get('/search', (req, res) => {
+router.get('/search',checkroles('teacher',"admin","student"), (req, res) => {
 
     const course = req.query.course
     const age = parseInt(req.query.age)
@@ -43,7 +48,7 @@ router.get('/search', (req, res) => {
 
 
 // GET - Student by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', checkroles('teacher',"admin","student"),(req, res) => {
 
     const id = parseInt(req.params.id)
 
@@ -62,7 +67,7 @@ router.get('/:id', (req, res) => {
 
 
 // POST - Create student
-router.post('/', (req, res) => {
+router.post('/',checkroles('teacher',"admin") ,(req, res) => {
 
     const { name, age, course } = req.body
 
@@ -89,7 +94,7 @@ router.post('/', (req, res) => {
 
 
 // PUT - Update student
-router.put('/:id', (req, res) => {
+router.put('/:id',checkroles('teacher',"admin"), (req, res) => {
 
     const id = parseInt(req.params.id)
 
@@ -117,7 +122,7 @@ router.put('/:id', (req, res) => {
 
 
 // DELETE - Delete student
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkroles("admin"),(req, res) => {
 
     const id = parseInt(req.params.id)
 
@@ -142,4 +147,4 @@ router.delete('/:id', (req, res) => {
 })
 
 
-export default router
+module.exports = router
