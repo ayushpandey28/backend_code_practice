@@ -1,5 +1,8 @@
+
 const express = require('express');
 const checkroles = require('../middleware/rolemiddleware.js')
+const Student=require('../models/studentModel.js')
+
 const router = express.Router();
 router.use((req,res,next)=>{
 console.log("You are at Student Route")
@@ -21,6 +24,7 @@ let students = [
 ]
 // GET - All students
 router.get('/',checkroles('teacher',"admin","student"), (req, res) => {
+    students=Student.find()
     res.json(students)
 })
 

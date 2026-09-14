@@ -107,12 +107,21 @@
 // })
 
 
-
+require('dotenv').config()
 const express=require('express') //const express=require('express')
 const app=express() //http.createserver equivalent to this
 app.use(express.urlencoded({ extended: true })); // we create a middleware so that data is written in json
 
-const studentRoutes=require('./routes/studentRoutes')
+const studentRoutes=require('./routes/studentRoutes');
+const { default: mongoose } = require('mongoose');
+const PORT=process.env.PORT||3000
+mongoose.connect(process.env.MONGODB_URL)
+.then(()=>{
+    console.log("Database Connected")
+})
+.catch((error) => { 
+    console.log("Error aa gaya",error); 
+})
 
 //Global Middleware
 app.use((req,res,next)=>{
