@@ -11,7 +11,9 @@ const studentSchema = new mongoose.Schema({
     course: {
         type: String,
         required: true
-    }
-});
+    },
+    name:String,
+    required:true
 
+});
 module.exports = studentSchema;
