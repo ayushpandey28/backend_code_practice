@@ -107,31 +107,41 @@
 // })
 
 
-require('dotenv').config()
-const express=require('express') //const express=require('express')
-const app=express() //http.createserver equivalent to this
-app.use(express.urlencoded({ extended: true })); // we create a middleware so that data is written in json
+// require('dotenv').config()
+// const express=require('express') //const express=require('express')
+// const app=express() //http.createserver equivalent to this
+// app.use(express.urlencoded({ extended: true })); // we create a middleware so that data is written in json
 
-const studentRoutes=require('./routes/studentRoutes');
-const { default: mongoose } = require('mongoose');
-const PORT=process.env.PORT||3000
-mongoose.connect(process.env.MONGODB_URL)
-.then(()=>{
-    console.log("Database Connected")
-})
-.catch((error) => { 
-    console.log("Error aa gaya",error); 
-})
+// const studentRoutes=require('./routes/studentRoutes');
+// const { default: mongoose } = require('mongoose');
+// const PORT=process.env.PORT||3000
+// mongoose.connect(process.env.MONGODB_URL)
+// .then(()=>{
+//     console.log("Database Connected")
+// })
+// .catch((error) => { 
+//     console.log("Error aa gaya",error); 
+// })
 
-//Global Middleware
-app.use((req,res,next)=>{
-    console.log("Request URL", req.originalUrl)
-    console.log("Requested Method", req.method)
-    next()
-})
+// //Global Middleware
+// app.use((req,res,next)=>{
+//     console.log("Request URL", req.originalUrl)
+//     console.log("Requested Method", req.method)
+//     next()
+// })
 
-app.use('/students',studentRoutes)
+// app.use('/students',studentRoutes)
 
-app.listen(3000,()=>{
-    console.log('Server started successfully... ')
-})
+// app.listen(3000,()=>{
+//     console.log('Server started successfully... ')
+// })
+
+
+
+const express = require("express");
+const app = express();
+const rectangleRouter = require("./rectangle");
+app.use("/", rectangleRouter);
+app.listen(8000, () => {
+    console.log("Server run kar raha hai");
+});
