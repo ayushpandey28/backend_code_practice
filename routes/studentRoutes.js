@@ -2,7 +2,7 @@
 const express = require('express');
 const checkroles = require('../middleware/rolemiddleware.js')
 const Student=require('../models/studentModel.js')
-
+const auth=require('../middleware/authmiddleware.js')
 const router = express.Router();
 router.use((req,res,next)=>{
 console.log("You are at Student Route")
@@ -40,13 +40,7 @@ router.get('/search',checkroles('teacher',"admin","student"), (req, res) => {
             message: "Course and age are required"
         })
     }
-
-    const stud = students.filter(
-        s =>
-            s.course.toLowerCase() === course.toLowerCase() &&
-            s.age === age
-    )
-
+    const stud = students.filter(s =>s.course.toLowerCase() === course.toLowerCase() && s.age === age)
     res.json(stud)
 })
 
@@ -113,7 +107,6 @@ router.put('/:id',checkroles('teacher',"admin"), (req, res) => {
     }
 
     const { name, age, course } = req.body
-
     student.name = name
     student.age = age
     student.course = course
@@ -127,28 +120,21 @@ router.put('/:id',checkroles('teacher',"admin"), (req, res) => {
 
 // DELETE - Delete student
 router.delete('/:id', checkroles("admin"),(req, res) => {
-
     const id = parseInt(req.params.id)
-
     const student = students.find(
         student => student.id === id
     )
-
     if (!student) {
         return res.status(404).json({
             message: "Student not found"
         })
     }
-
     students = students.filter(
         student => student.id !== id
     )
-
     res.json({
         message: "Student deleted successfully",
         student
     })
 })
-
-
 module.exports = router

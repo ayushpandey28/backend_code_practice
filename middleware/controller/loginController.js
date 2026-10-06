@@ -5,21 +5,17 @@ const generateToken = require("../utils/jwt.js");
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-
         if (!email || !password) {
             return res.status(400).json({
                 message: "email and password are required"
             });
         }
-
         const existingUser = await User.findOne({ email });
-
         if (!existingUser) {
             return res.status(404).json({
                 message: "User not found"
             });
         }
-
         const isMatch = await bcrypt.compare(
             password,
             existingUser.password
@@ -35,7 +31,7 @@ const loginUser = async (req, res) => {
         res.cookie("token",token,{
             httpOnly:true,
             secure:process.env.SECRET_KEY,
-            maxAge:360000 //in millisecond
+            maxAge:60*60*100 //in millisecond ham likhte hai
         }
 
         )

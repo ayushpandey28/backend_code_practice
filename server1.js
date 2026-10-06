@@ -141,7 +141,11 @@
 const express = require("express");
 const app = express();
 const rectangleRouter = require("./rectangle");
+const authController=require("./routes/authRoutes")
 app.use("/", rectangleRouter);
+
+app.use('/students',studentRoutes)
+app.use('./')
 app.listen(8000, () => {
     console.log("Server run kar raha hai");
 });
