@@ -1,3 +1,4 @@
+
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const generateToken = require("../utils/jwt.js");
@@ -5,17 +6,21 @@ const generateToken = require("../utils/jwt.js");
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+
         if (!email || !password) {
             return res.status(400).json({
                 message: "email and password are required"
             });
         }
+
         const existingUser = await User.findOne({ email });
+
         if (!existingUser) {
             return res.status(404).json({
                 message: "User not found"
             });
         }
+
         const isMatch = await bcrypt.compare(
             password,
             existingUser.password
@@ -28,13 +33,15 @@ const loginUser = async (req, res) => {
         }
 
         const token = generateToken(existingUser);
-        res.cookie("token",token,{
-            httpOnly:true,
-            secure:process.env.SECRET_KEY,
-            maxAge:60*60*100 //in millisecond ham likhte hai
-        }
 
-        )
+        existingUser.accesstoken = token;
+        await existingUser.save();
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 60 * 60 * 1000
+        });
 
         return res.status(200).json({
             message: "Login successful",

@@ -5,11 +5,23 @@ const generateToken = (user) => {
             id: user._id,
             email: user.email
         },
-      process.env.JWT_SECRET || "secretkey",
+        process.env.JWT_SECRET || "secretkey",
         {
-            expiresIn: "5h"
+            expiresIn: "1h"
         }
     );
 };
-module.exports = generateToken;
+
+const generateTokenAccess = (user) => {
+    return jwt.sign(
+        {
+            id: user._id
+        },
+        process.env.SECRET_KEY,
+        {
+            expiresIn: "1h"
+        }
+    );
+};
+module.exports = {generateToken,generateTokenAccess};
 

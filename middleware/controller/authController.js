@@ -1,12 +1,11 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
-const { loginUser } = require("./loginController");
 const regUser = async (req, res) => {
     try {
         const { firstName, email, password } = req.body;
-        if (!UserName || !email || !password) {
+        if (!firstName || !email || !password) {
             return res.status(400).json({
-                message: "UserName, email, and password are required"
+                message: "firstName, email, and password are required"
             });
         }
         const existingUser = await User.findOne({ email });
@@ -30,12 +29,10 @@ const regUser = async (req, res) => {
             }
         });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return res.status(500).json({
             message: "Something went wrong"
         });
     }
 };
-module.exports = {regUser,loginUser};
-
-
+module.exports = { regUser };
