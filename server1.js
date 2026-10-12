@@ -138,14 +138,72 @@
 
 
 
-const express = require("express");
-const app = express();
-const rectangleRouter = require("./rectangle");
-const authController=require("./routes/authRoutes")
-app.use("/", rectangleRouter);
+// const express = require("express");
+// const app = express();
+// const rectangleRouter = require("./rectangle");
+// const authController=require("./routes/authRoutes")
+// app.use("/", rectangleRouter);
 
-app.use('/students',studentRoutes)
-app.use('./')
-app.listen(8000, () => {
-    console.log("Server run kar raha hai");
+// app.use('/students',studentRoutes)
+// app.use('./')
+// app.listen(8000, () => {
+//     console.log("Server run kar raha hai");
+// });
+
+
+
+
+
+// const express = require("express");
+// const cors = require("cors");
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
+// // Temporary task storage
+// let tasks = [];
+// let id = 1;
+// // Get all tasks
+// app.get("/api/task", (req, res) => {
+//   res.json(tasks);
+// });
+// // Add a task
+// app.post("/api/task", (req, res) => {
+//   const { title } = req.body;
+//   if (!title || !title.trim()) {
+//     return res.status(400).json({
+//       message: "Title is required"
+//     });
+//   }
+//   const newTask = {
+//     _id: id++,
+//     title: title
+//   };
+//   tasks.push(newTask);
+//   res.status(201).json(newTask);
+// });
+// // Delete a task
+// app.delete("/api/task/:id", (req, res) => {
+//   const taskId = Number(req.params.id);
+//   tasks = tasks.filter((task) => task._id !== taskId);
+//   res.json({ message: "Task deleted" });
+// });
+// app.listen(5050, () => {
+//   console.log("Server running at http://localhost:5050");
+// });
+
+
+
+
+const express = require("express");
+const cors = require("cors");
+const app = express();
+app.use(cors());
+app.use(express.json());
+// Import task routes
+const taskRoutes = require("./routes/taskRoutes");
+// Connect routes
+app.use("/api/task", taskRoutes);
+app.listen(5050, () => {
+  console.log("Server running on port 5050");
 });
+
